@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>grnbck</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="apple-touch-icon" sizes="60x60" href="favicon.png" />
+
+    <!-- Kritisk CSS -->
+    <style>
+      /* Inline kritisk CSS */
+      body {
+        font-family: "Helvetica";
+        color: #00352f;
+        background-color: #ffffff;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        scroll-behavior: smooth;
+      }
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        background-color: rgba(255, 255, 255, 0);
+        transition: background-color 0.3s ease-in-out;
+      }
+      .navbar.scrolled {
+        background-color: rgba(255, 255, 255, 1);
+      }
+      .logo img {
+        height: 50px;
+        transition: all 0.3s ease-in-out;
+      }
+      .nav-menu {
+        display: flex;
+        list-style: none;
+        margin: 0;
+        flex-grow: 1;
+        justify-content: center;
+      }
+      .nav-menu li {
+        margin-right: 20px;
+      }
+      .nav-menu li a {
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 18px;
+        font-weight: 300;
+      }
+      .nav-button.right {
+        background-color: #00352f;
+        border: 2px solid #00352f;
+        color: #ffffff;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: normal;
+        border-radius: 25px;
+        transition:
+          background-color 0.3s,
+          color 0.3s,
+          border 0.3s;
+        margin-right: 20px; /* Ökad marginal till höger i desktopläge */
+      }
+      .nav-button.right:hover {
+        background-color: #ffffff;
+        color: #00352f;
+        border: 2px solid #00352f;
+      }
+      .menu-icon {
+        display: none;
+        cursor: pointer;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .menu-icon .bar {
+        width: 25px;
+        height: 3px;
+        background-color: #00352f;
+        border-radius: 2px;
+      }
+      .hero {
+        height: 100vh;
+        background: url("hero-background.jpg") no-repeat center center/cover;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 1;
+      }
+      .hero-text {
+        position: relative;
+        text-align: center;
+        z-index: 2;
+      }
+      .hero-text h1 {
+        font-size: 48px;
+        margin-bottom: 40px;
+        font-weight: bold;
+        color: #ffffff;
+      }
+      .hero-button {
+        background-color: #00352f;
+        border: 2px solid #00352f;
+        color: #ffffff;
+        padding: 10px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: normal;
+        border-radius: 25px;
+        transition:
+          background-color 0.3s,
+          color 0.3s,
+          border 0.3s;
+      }
+      .hero-button:hover {
+        background-color: #ffffff;
+        color: #00352f;
+        border: 2px solid #00352f;
+      }
+    </style>
+
+    <!-- HomeQ Widget CSS -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://widgets.homeq.se/widgets/overview.css"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="top"></div>
+    <!-- Navigation Bar -->
+    <header>
+      <nav class="navbar">
+        <a href="#top" class="logo" id="scroll-to-top">
+          <img src="logo.png" alt="grnbck logo" id="navbar-logo" />
+        </a>
+        <div class="menu-icon" id="menu-icon">
+          <div class="bar"></div>
+          <div class="bar"></div>
+          <div class="bar"></div>
+        </div>
+        <ul class="nav-menu">
+          <li><a href="#sok-ledigt">Sök ledigt</a></li>
+          <li><a href="#vara-fastigheter">Våra fastigheter</a></li>
+          <li><a href="#kundservice">Kundservice</a></li>
+          <li><a href="#om-grnbck-home">Om grnbck</a></li>
+        </ul>
+        <a
+          href="https://tyggarden.se/felanmalan-grnbck/"
+          target="_blank"
+          class="nav-button right"
+          >Felanmälan</a
+        >
+      </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+      <span class="close-menu" id="close-menu">&times;</span>
+      <ul>
+        <li><a href="#sok-ledigt">Sök ledigt</a></li>
+        <li><a href="#vara-fastigheter">Våra fastigheter</a></li>
+        <li><a href="#kundservice">Kundservice</a></li>
+        <li><a href="#om-grnbck-home">Om grnbck</a></li>
+      </ul>
+      <a
+        href="https://tyggarden.se/felanmalan-grnbck/"
+        target="_blank"
+        class="nav-button mobile"
+        >Felanmälan</a
+      >
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Välkommen till grnbck</h1>
+        <a
+          href="mailto:info@tyggarden.se?subject=Intresseanmälan för bostad&body=Vilken%20typ%20av%20lägenhet%20önskar du?%0A%0AAntal%20rum%20och%20kök%20(intervall):%0AStad:%0AOmråde:%0AMaxhyra%20per%20månad:"
+          class="hero-button"
+          >Ställ dig i vår bostadskö</a
+        >
+      </div>
+    </section>
+
+    <!-- White Section -->
+    <section id="sok-ledigt" class="white-section">
+      <div class="white-content">
+        <h2>Sök lediga lägenheter</h2>
+        <p>
+          Vill du bo i en av våra centralt belägna och välplanerade lägenheter?
+          Här hittar du alla våra tillgängliga lägenheter just nu. Nya
+          lägenheter läggs upp kontinuerligt, så håll utkik regelbundet!
+        </p>
+        <p>
+          Du kan också prenumerera på uppdateringar om lediga lägenheter. Då får
+          du ett mejl direkt när en bostad som matchar dina önskemål blir
+          tillgänglig.
+        </p>
+        <p>
+          Ladda gärna ner vår aktuella
+          <a href="Uthyrningspolicy.pdf" target="_blank" class="no-style-phone"
+            >Uthyrningspolicy</a
+          >
+          för att se vilka krav som gäller för dig som potentiell hyresgäst.
+        </p>
+        <a
+          href="mailto:info@tyggarden.se?subject=Intresseanmälan för bostad&body=Vilken%20typ%20av%20lägenhet%20önskar du?%0A%0AAntal%20rum%20och%20kök%20(intervall):%0AStad:%0AOmråde:%0AMaxhyra%20per%20månad:"
+          class="cta-button"
+          >Ställ dig i vår bostadskö</a
+        >
+        <!-- HomeQ Widget -->
+        <div id="homeq-anchor" data-company="1222"></div>
+      </div>
+    </section>
+
+    <!-- First Image Section -->
+    <section class="image-section" id="image-section-1"></section>
+
+    <!-- Våra Fastigheter Section -->
+    <section id="vara-fastigheter" class="properties-section">
+      <div class="properties-content">
+        <h2>Våra fastigheter</h2>
+        <p>
+          Vi äger och förvaltar 10 fastigheter med totalt 111 lägenheter. Vår
+          filosofi är att genom löpande lägenhetsrenoveringar, upprustning av
+          fastigheterna och effektivisering av driften kunna erbjuda våra kunder
+          ett attraktivt hem.
+        </p>
+        <div class="properties-gallery">
+          <div class="property-item">
+            <picture>
+              <source srcset="rudsvagen-15a-d.webp" type="image/webp" />
+              <img
+                src="rudsvagen-15a-d.jpg"
+                alt="Rudsvägen 15A-D, Karlstad Pilen 11"
+                loading="lazy"
+              />
+            </picture>
+            <p>Rudsvägen 15A-D, 654 63 Karlstad | Karlstad Pilen 11</p>
+          </div>
+
+          <div class="property-item">
+            <picture>
+              <source srcset="marbackagatan-3.webp" type="image/webp" />
+              <img
+                src="marbackagatan-3.jpg"
+                alt="Mårbackagatan 3, Karlstad Kommissarien 7"
+                loading="lazy"
+              />
+            </picture>
+            <p>Mårbackagatan 3, 654 62 Karlstad | Karlstad Kommissarien 7</p>
+          </div>
+
+          <div class="property-item">
+            <picture>
+              <source srcset="norrmalmsgatan-2.webp" type="image/webp" />
+              <img
+                src="norrmalmsgatan-2.jpg"
+                alt="Norrmalmsgatan 2, Karlstad Kråkan 10"
+                loading="lazy"
+              />
+            </picture>
+            <p>Norrmalmsgatan 2, 654 65 Karlstad | Karlstad Kråkan 10</p>
+          </div>
+
+          <div class="property-item">
+            <picture>
+              <source srcset="bergslagsgatan-2a-c.webp" type="image/webp" />
+              <img
+                src="bergslagsgatan-2a-c.jpg"
+                alt="Bergslagsgatan 2A-C, Karlstad Kilen 20"
+                loading="lazy"
+              />
+            </picture>
+            <p>Bergslagsgatan 2A-C, 652 22 Karlstad | Karlstad Kilen 20</p>
+          </div>
+
+          <div class="property-item">
+            <picture>
+              <source srcset="herrhagsgatan-32a-b.webp" type="image/webp" />
+              <img
+                src="herrhagsgatan-32a-b.jpg"
+                alt="Herrhagsgatan 32A-B, Karlstad Höder 3"
+                loading="lazy"
+              />
+            </picture>
+            <p>Herrhagsgatan 32A-B, 652 22 Karlstad | Karlstad Höder 3</p>
+          </div>
+
+          <div class="property-item">
+            <picture>
+              <source srcset="sveagatan-9a-c.webp" type="image/webp" />
+              <img
+                src="sveagatan-9a-c.jpg"
+                alt="Sveagatan 9A-C, Karlstad Höder 6"
+                loading="lazy"
+              />
+            </picture>
+            <p>Sveagatan 9A-C, 652 22 Karlstad | Karlstad Höder 6</p>
+          </div>
+
+          <div class="property-item">
+            <picture>
+              <source srcset="herrhagsgatan-19a-c.webp" type="image/webp" />
+              <img
+                src="herrhagsgatan-19a-c.jpg"
+                alt="Herrhagsgatan 19A-C, Karlstad Lodjuret 8"
+                loading="lazy"
+              />
+            </picture>
+            <p>Herrhagsgatan 19A-C, 652 18 Karlstad | Karlstad Lodjuret 8</p>
+          </div>
+
+          <div class="property-item">
+            <picture>
+              <source srcset="bergslagsgatan-6a-b.webp" type="image/webp" />
+              <img
+                src="bergslagsgatan-6a-b.jpg"
+                alt="Bergslagsgatan 6A-B, Karlstad Kilen 25"
+                loading="lazy"
+              />
+            </picture>
+            <p>Bergslagsgatan 6A-B, 652 22 Karlstad | Karlstad Kilen 25</p>
+          </div>
+
+          <div class="property-item">
+            <picture>
+              <source srcset="lagmansgatan-15.webp" type="image/webp" />
+              <img
+                src="lagmansgatan-15.jpg"
+                alt="Lagmansgatan 15, Karlstad Skolmästaren 13"
+                loading="lazy"
+              />
+            </picture>
+            <p>Lagmansgatan 15, 654 61 Karlstad | Karlstad Skolmästaren 13</p>
+          </div>
+
+          <div class="property-item">
+            <picture>
+              <source srcset="herrhagsgatan-8a-d.webp" type="image/webp" />
+              <img
+                src="herrhagsgatan-8a-d.jpg"
+                alt="Herrhagsgatan 8A-D, 652 18 Karlstad, Karlstad Idun 4"
+                loading="lazy"
+              />
+            </picture>
+            <p>Lagmansgatan 15, 654 61 Karlstad | Karlstad Skolmästaren 13</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Second Image Section -->
+    <section class="image-section" id="image-section-2"></section>
+
+    <!-- Kundservice Section -->
+    <section id="kundservice" class="service-section">
+      <div class="service-content">
+        <h2>Kundservice</h2>
+        <h3>Felanmälan</h3>
+        <p>
+          Ibland går saker sönder eller krånglar, om du upptäcker fel i din
+          lägenhet eller i gemensamma utrymmen som exempelvis tvättstuga eller
+          trapphus så ska du så snabbt som möjligt meddela oss detta. För
+          snabbast åtgärd önskar vi att du fyller i formuläret på
+          <a
+            href="https://tyggarden.se/felanmalan-grnbck/"
+            target="_blank"
+            class="link"
+            >www.tyggarden.se/felanmalan-grnbck</a
+          >
+          och beskriver ärendet så bra som möjligt.
+        </p>
+        <h3>Jour</h3>
+        <p>
+          Är felet akut ska du alltid kontakta oss via telefon. Exempel på akuta
+          fel är vattenläckor, stopp i avlopp eller strömavbrott.
+        </p>
+        <p>Telefonnummer:</p>
+        <p>
+          <a href="tel:054140180" class="no-style-phone">054-14 01 80</a>
+          (helgfri vardag mellan 08:00 – 16:00)
+        </p>
+        <p>
+          <a href="tel:0104705781" class="no-style-phone">010-470 57 81</a>
+          (öppet all övrig tid)
+        </p>
+        <h3>Åtgärder som debiteras</h3>
+        <p>
+          Om du som hyresgäst orsakar skador i lägenheten eller fastighetens
+          gemensamma utrymmen kan du bli ersättningsskyldig. Ladda ner vår
+          aktuella
+          <a href="Atgardslista.pdf" target="_blank" class="no-style-phone"
+            >Åtgärdslista</a
+          >
+          för att se vilka åtgärder som kan debiteras och vad de kostar.
+        </p>
+        <h3>Hyresgästhandbok</h3>
+        <p>
+          Ladda ner
+          <a href="Hyresgasthandbok.pdf" target="_blank" class="no-style-phone"
+            >Hyresgästhandboken</a
+          >
+          som innehåller all viktig information om inflytt, ditt boende, och
+          utflytt.
+        </p>
+        <h3>Uthyrning i andra hand</h3>
+        <p>
+          Vill du hyra ut din lägenhet i andra hand? Det kräver alltid tillstånd
+          från oss som hyresvärd och godkänns endast under vissa
+          förutsättningar. Ladda ner vår
+          <a
+            href="Andrahandsuthyrning.pdf"
+            target="_blank"
+            class="no-style-phone"
+            >Blankett</a
+          >
+          för att läsa mer om vilka regler som gäller och hur du ansöker.
+          Observera att en administrativ avgift om 1 500 kr tas ut i samband med
+          ansökan.
+        </p>
+        <h3>Uppsägning</h3>
+        <p>
+          Vill du säga upp din lägenhet? Uppsägning ska alltid göras skriftligen
+          med rekommenderat brev. Ladda ner vår
+          <a
+            href="Uppsagningsblankett.pdf"
+            target="_blank"
+            class="no-style-phone"
+            >Uppsägningsblankett</a
+          >
+          och följ instruktionerna. Tänk på att även säga upp eventuella
+          tilläggsavtal, som parkeringsplats eller förråd. Om du vill flytta ut
+          tidigare än uppsägningstiden medger, finns möjlighet till en påskyndad
+          uthyrningsprocess mot en administrativ avgift på 2 500 kr.
+        </p>
+        <h3>Flyttstädning</h3>
+        <p>
+          När du flyttar ut är det viktigt att bostaden är ordentligt städad.
+          Bristfällig städning medför debitering. Ladda ner vår
+          <a href="Flyttstadning.pdf" target="_blank" class="no-style-phone"
+            >Checklista</a
+          >
+          för att se vad som ingår i en godkänd flyttstädning. Den hjälper dig
+          att inte missa något viktigt innan nyckelöverlämning.
+        </p>
+        <h3>Kontakt</h3>
+        <p>
+          Har du frågor eller funderingar? Vår kundservice är här för att hjälpa
+          dig. Kontakta oss gärna via e-post på
+          <a href="mailto:info@tyggarden.se" class="no-style-phone"
+            >info@tyggarden.se</a
+          >
+          eller ring oss på
+          <a href="tel:054140180" class="no-style-phone">054-14 01 80</a>.
+        </p>
+      </div>
+    </section>
+
+    <!-- Third Image Section -->
+    <section class="image-section" id="image-section-3"></section>
+
+    <!-- Om grnbck Section -->
+    <section id="om-grnbck-home" class="about-section">
+      <div class="about-content">
+        <h2>Om grnbck</h2>
+        <p>
+          grnbck är ett fastighetsbolag med fokus på långsiktigt ägande och
+          förvaltning av hyreslägenheter. Vi erbjuder bostäder i utvalda
+          tillväxtorter. Målet är att bedriva en förvaltning som främjar en
+          trygg och trivsam boendemiljö.
+        </p>
+      </div>
+      <div class="about-image"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-left">
+          <img src="logo.png" alt="grnbck logo" class="footer-logo-img" />
+          <p>Tullhusgatan 3F<br />652 11 Karlstad</p>
+          <p>
+            <a href="mailto:info@tyggarden.se">info@tyggarden.se</a>
+          </p>
+        </div>
+        <div class="footer-middle">
+          <h2>Meny</h2>
+          <ul>
+            <li><a href="#sok-ledigt">Sök ledigt</a></li>
+            <li><a href="#vara-fastigheter">Våra fastigheter</a></li>
+            <li><a href="#kundservice">Kundservice</a></li>
+            <li><a href="#om-grnbck-home">Om grnbck</a></li>
+          </ul>
+        </div>
+        <div class="footer-right">
+          <ul>
+            <li>Journummer</li>
+            <li>
+              <a href="tel:0104705781" class="no-style-phone">010-470 57 81</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; <span id="currentYear"></span> grnbck AB, alla rättigheter
+          förbehållna.
+        </p>
+      </div>
+    </footer>
+
+    <!-- HomeQ Widget JS -->
+    <script
+      type="application/javascript"
+      src="https://widgets.homeq.se/widgets/overview.js"
+    ></script>
+
+    <!-- JavaScript for Mobile Menu and Scroll-to-Top -->
+    <script async>
+      document.addEventListener("DOMContentLoaded", function () {
+        // Om hash-värdet inte är "#top", omdirigera till toppen
+        if (window.location.hash !== "#top") {
+          window.location.hash = "#top";
+        }
+
+        // Klick för att scrolla till toppen
+        document
+          .getElementById("scroll-to-top")
+          .addEventListener("click", function (e) {
+            e.preventDefault();
+            document.getElementById("top").scrollIntoView({
+              behavior: "smooth",
+            });
+          });
+
+        // Din övriga JavaScript-kod, som för den mobila menyn och navbar-scroll-effekten
+        const menuIcon = document.getElementById("menu-icon");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const closeMenu = document.getElementById("close-menu");
+        const navLinks = document.querySelectorAll(".mobile-menu ul li a");
+        const navbarLogo = document.getElementById("navbar-logo");
+
+        menuIcon.addEventListener("click", () => {
+          mobileMenu.classList.add("active");
+        });
+
+        closeMenu.addEventListener("click", () => {
+          mobileMenu.classList.remove("active");
+        });
+
+        navLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            mobileMenu.classList.remove("active");
+          });
+        });
+
+        window.addEventListener("scroll", function () {
+          const navbar = document.querySelector(".navbar");
+          const whiteSection = document.querySelector(".white-section");
+          const whiteSectionPosition = whiteSection.getBoundingClientRect().top;
+
+          if (window.scrollY >= whiteSectionPosition) {
+            navbar.classList.add("scrolled");
+            navbarLogo.src = "logo 2.png"; // Change to "logo-2.jpg"
+            document
+              .querySelectorAll(".nav-menu li a")
+              .forEach(function (item) {
+                item.style.color = "#00352F";
+              });
+          } else {
+            navbar.classList.remove("scrolled");
+            navbarLogo.src = "logo.png"; // Revert to original logo
+            document
+              .querySelectorAll(".nav-menu li a")
+              .forEach(function (item) {
+                item.style.color = "#FFFFFF";
+              });
+          }
+        });
+      });
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+    </script>
+  </body>
+</html>
